@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.langham.chris.starships.viewmodel.StarShipViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/shipName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.shipName}"
+            android:layout_margin="@dimen/default_margin" />
+
+        <TextView
+            android:id="@+id/shipManufacturer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.manufacturer}"
+            android:layout_margin="@dimen/default_margin" />
+    </LinearLayout>
+</layout>
