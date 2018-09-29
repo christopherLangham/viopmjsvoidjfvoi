@@ -1,6 +1,5 @@
 package com.langham.chris.starships.model;
 
-import android.arch.persistence.room.util.StringUtil;
 import android.os.Parcel;
 import android.os.Parcelable;
 
