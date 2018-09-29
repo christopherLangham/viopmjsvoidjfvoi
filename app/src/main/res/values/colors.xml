@@ -5,4 +5,5 @@
     <color name="colorAccent">#F4F4F4</color>
     <color name="cardBackgroundColor">#FDFDFD</color>
     <color name="black">#000</color>
+    <color name="spinnerColor">#00AAAA</color>
 </resources>

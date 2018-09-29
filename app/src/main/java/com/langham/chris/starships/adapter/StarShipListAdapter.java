@@ -40,5 +40,6 @@ public class StarShipListAdapter extends RecyclerView.Adapter<StarShipViewHolder
 
     public void setStarShips(final List<StarShip> starShips) {
         this.starShips = starShips;
+        notifyDataSetChanged();
     }
 }

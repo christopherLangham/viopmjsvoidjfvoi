@@ -1,11 +1,14 @@
 package com.langham.chris.starships.model;
 
+import android.arch.persistence.room.util.StringUtil;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import static com.langham.chris.starships.api.StarWarsApi.STAR_SHIPS_URL;
 
 public class StarShipPage implements Parcelable {
 
@@ -49,6 +52,10 @@ public class StarShipPage implements Parcelable {
         }
     };
 
+    public boolean hasNext() {
+        return next != null;
+    }
+
     public int getCount() {
         return count;
     }
@@ -57,7 +64,7 @@ public class StarShipPage implements Parcelable {
         this.count = count;
     }
 
-    public String getNext() {
+    private String getNext() {
         return next;
     }
 
@@ -79,5 +86,14 @@ public class StarShipPage implements Parcelable {
 
     public void setStarShipList(List<StarShip> starShipList) {
         this.starShipList = starShipList;
+    }
+
+    public int getNextIndex() {
+        if (hasNext()) {
+            String nextUrl = getNext().replace(STAR_SHIPS_URL, "");
+            return Integer.valueOf(nextUrl);
+        } else {
+            return 0;
+        }
     }
 }

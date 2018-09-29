@@ -1,60 +1,56 @@
 package com.langham.chris.starships;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.langham.chris.starships.adapter.StarShipListAdapter;
-import com.langham.chris.starships.api.StarWarsApi;
+import com.langham.chris.starships.api.NetworkListener;
 import com.langham.chris.starships.databinding.ActivityMainBinding;
-import com.langham.chris.starships.model.StarShipPage;
+import com.langham.chris.starships.model.StarShip;
+import com.langham.chris.starships.viewmodel.StarShipListViewModel;
 
 import java.util.Collections;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ActivityMainBinding binding;
     private StarShipListAdapter adapter;
+    private StarShipListViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //todo set up tool bar
-        //viewModel = ViewModelProviders.of(this).get(ChooseYourRewardViewModel.class);
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        //set view model if needed
-
+        setupViewModel();
         setupRecyclerAdapter();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Call<StarShipPage> call = StarWarsApi.getApi().getStarships(1);
 
-        //spinner?
-        call.enqueue(new Callback<StarShipPage>() {
+        if (viewModel.getStarShips().size() > 0) {
+            adapter.setStarShips(viewModel.getStarShips());
+            return;
+        }
+
+        viewModel.getFirstStarShipPage(new NetworkListener<List<StarShip>>() {
             @Override
-            public void onResponse(@NonNull Call<StarShipPage> call, @NonNull Response<StarShipPage> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    adapter.setStarShips(response.body().getStarShipList());
-                    adapter.notifyDataSetChanged();
-                } else {
-                    Log.d(TAG, "Something went wrong. Http code " + response.code());
-                }
+            public void onSuccess(List<StarShip> starShips) {
+                viewModel.setStarShips(starShips);
+                adapter.setStarShips(viewModel.getStarShips());
             }
 
             @Override
-            public void onFailure(@NonNull Call<StarShipPage> call, @NonNull Throwable error) {
+            public void onFailure(Throwable error) {
                 Log.d(TAG, error.getMessage());
                 //load from db??
                 //alert dialog
@@ -62,9 +58,40 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setupViewModel() {
+        viewModel = ViewModelProviders.of(this).get(StarShipListViewModel.class);
+    }
+
     private void setupRecyclerAdapter() {
         adapter = new StarShipListAdapter(Collections.emptyList());
         binding.starShipListView.setAdapter(adapter);
         binding.starShipListView.setLayoutManager(new LinearLayoutManager(this));
+        binding.starShipListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) binding.starShipListView.getLayoutManager();
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemIndex = layoutManager.findFirstVisibleItemPosition();
+
+                if (viewModel.shouldLoadMoreStarShips(visibleItemCount, totalItemCount, firstVisibleItemIndex)) {
+                    binding.spinner.setVisibility(View.VISIBLE);
+                    viewModel.getNextStarShipPage(new NetworkListener<List<StarShip>>() {
+                        @Override
+                        public void onSuccess(List<StarShip> starShips) {
+                            viewModel.addStarShips(starShips);
+                            adapter.setStarShips(viewModel.getStarShips());
+                            binding.spinner.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable error) {
+                            Log.d(TAG, error.getMessage());
+                        }
+                    });
+                }
+            }
+        });
     }
 }

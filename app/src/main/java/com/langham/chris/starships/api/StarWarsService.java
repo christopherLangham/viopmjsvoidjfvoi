@@ -15,8 +15,8 @@ public interface StarWarsService {
     Call<Person> getPerson(@Path("id") int peopleId);
 
     @GET("/api/starships")
-    Call<StarShipPage> getStarships(@Query("page") int page);
+    Call<StarShipPage> getStarShips(@Query("page") int page);
 
     @GET("/api/starships/{id}/")
-    Call<StarShip> getStarship(@Path("id") int starShipId);
+    Call<StarShip> getStarShip(@Path("id") int starShipId);
 }

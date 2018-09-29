@@ -6,7 +6,7 @@ import com.langham.chris.starships.model.StarShip;
 
 public class StarShipViewModel extends ViewModel {
 
-    public StarShip starShip;
+    private StarShip starShip;
 
     public StarShipViewModel(final StarShip starShip) {
         this.starShip = starShip;
