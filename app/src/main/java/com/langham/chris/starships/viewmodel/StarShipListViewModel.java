@@ -8,7 +8,7 @@ import com.langham.chris.starships.api.StarWarsApi;
 import com.langham.chris.starships.model.StarShip;
 import com.langham.chris.starships.model.StarShipPage;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -17,10 +17,10 @@ import retrofit2.Response;
 
 public class StarShipListViewModel extends ViewModel {
 
-    private StarShipPage currentPage;
+    private StarShipPage currentPage = new StarShipPage();
     private final int FIRST_PAGE_INDEX = 1;
     private boolean isLoading = false;
-    private List<StarShip> starShips = Collections.emptyList();
+    private List<StarShip> starShips = new ArrayList<>();
 
     public void getNextStarShipPage(final NetworkListener<List<StarShip>> listener) {
         getStarShips(getNextPageIndex(), listener);
@@ -78,5 +78,13 @@ public class StarShipListViewModel extends ViewModel {
 
     public List<StarShip> getStarShips() {
         return starShips;
+    }
+
+    public void setStarShipPage(final StarShipPage starShipPage) {
+        this.currentPage = starShipPage;
+    }
+
+    public StarShipPage getCurrentPage() {
+        return this.currentPage;
     }
 }

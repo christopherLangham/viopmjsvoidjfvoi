@@ -15,6 +15,7 @@ import com.langham.chris.starships.adapter.StarShipListAdapter;
 import com.langham.chris.starships.api.NetworkListener;
 import com.langham.chris.starships.databinding.ActivityMainBinding;
 import com.langham.chris.starships.model.StarShip;
+import com.langham.chris.starships.model.StarShipPage;
 import com.langham.chris.starships.viewmodel.StarShipListViewModel;
 
 import java.util.Collections;
@@ -23,6 +24,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements StarShipDetailListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    public static final String STAR_SHIPS_KEY = "starShipsKey";
     private ActivityMainBinding binding;
     private StarShipListAdapter adapter;
     private StarShipListViewModel viewModel;
@@ -48,16 +50,21 @@ public class MainActivity extends AppCompatActivity implements StarShipDetailLis
             @Override
             public void onSuccess(List<StarShip> starShips) {
                 viewModel.setStarShips(starShips);
-                adapter.setStarShips(viewModel.getStarShips());
+                adapter.setStarShips(viewModel.getStarShips()
+                );
             }
 
             @Override
             public void onFailure(Throwable error) {
                 Log.d(TAG, error.getMessage());
                 //load from database to see if we can show something to the user
-                //possibly show an alert dialog
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     @Override
@@ -103,5 +110,10 @@ public class MainActivity extends AppCompatActivity implements StarShipDetailLis
 
     private void setupViewModel() {
         viewModel = ViewModelProviders.of(this).get(StarShipListViewModel.class);
+        StarShipPage starShipPage = getIntent().getParcelableExtra(STAR_SHIPS_KEY);
+        if (starShipPage != null && viewModel.getStarShips().isEmpty()) {
+            viewModel.setStarShipPage(starShipPage);
+            viewModel.setStarShips(starShipPage.getStarShipList());
+        }
     }
 }
