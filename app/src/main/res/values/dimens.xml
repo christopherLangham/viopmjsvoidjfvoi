@@ -2,4 +2,5 @@
     <dimen name="default_margin">16dp</dimen>
     <dimen name="card_margin">8dp</dimen>
     <dimen name="cardCornerRadius">2dp</dimen>
+    <dimen name="star_ship_details_font_size">14sp</dimen>
 </resources>
