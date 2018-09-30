@@ -15,8 +15,10 @@ import java.util.List;
 public class StarShipListAdapter extends RecyclerView.Adapter<StarShipViewHolder> {
 
     private List<StarShip> starShips;
+    private StarShipDetailListener starShipDetailListener;
 
-    public StarShipListAdapter(final List<StarShip> starShips) {
+    public StarShipListAdapter(final StarShipDetailListener listener, final List<StarShip> starShips) {
+        this.starShipDetailListener = listener;
         this.starShips = starShips;
     }
 
@@ -31,6 +33,7 @@ public class StarShipListAdapter extends RecyclerView.Adapter<StarShipViewHolder
     @Override
     public void onBindViewHolder(@NonNull StarShipViewHolder holder, final int position) {
         holder.setViewModel(starShips.get(position));
+        holder.itemView.setOnClickListener(v -> starShipDetailListener.onShowDetail(starShips.get(position)));
     }
 
     @Override

@@ -7,8 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import static com.langham.chris.starships.api.StarWarsApi.STAR_SHIPS_URL;
-
 public class StarShipPage implements Parcelable {
 
     private int count;
@@ -63,7 +61,7 @@ public class StarShipPage implements Parcelable {
         this.count = count;
     }
 
-    private String getNext() {
+    public String getNext() {
         return next;
     }
 
@@ -89,7 +87,7 @@ public class StarShipPage implements Parcelable {
 
     public int getNextIndex() {
         if (hasNext()) {
-            String nextUrl = getNext().replace(STAR_SHIPS_URL, "");
+            String nextUrl = getNext().replaceAll("\\D+", "");
             return Integer.valueOf(nextUrl);
         } else {
             return 0;

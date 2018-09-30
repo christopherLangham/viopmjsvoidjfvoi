@@ -19,9 +19,6 @@ public class StarShip implements Parcelable {
     private String edited;
     private String url;
 
-    @SerializedName("vehicle_class")
-    private String vehicleClass;
-
     @SerializedName("cost_in_credits")
     private String costInCredits;
 
@@ -58,7 +55,6 @@ public class StarShip implements Parcelable {
         created = in.readString();
         edited = in.readString();
         url = in.readString();
-        vehicleClass = in.readString();
         costInCredits = in.readString();
         maxSpeed = in.readString();
         cargoCapacity = in.readString();
@@ -98,7 +94,6 @@ public class StarShip implements Parcelable {
         dest.writeString(created);
         dest.writeString(edited);
         dest.writeString(url);
-        dest.writeString(vehicleClass);
         dest.writeString(costInCredits);
         dest.writeString(maxSpeed);
         dest.writeString(cargoCapacity);
@@ -187,14 +182,6 @@ public class StarShip implements Parcelable {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getVehicleClass() {
-        return vehicleClass;
-    }
-
-    public void setVehicleClass(String vehicleClass) {
-        this.vehicleClass = vehicleClass;
     }
 
     public String getCostInCredits() {

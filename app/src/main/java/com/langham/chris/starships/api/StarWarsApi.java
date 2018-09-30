@@ -6,7 +6,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StarWarsApi {
 
     private static final String BASE_URL = "https://swapi.co/";
-    public static final String STAR_SHIPS_URL = BASE_URL + "api/starships/?page=";
     private static StarWarsApi apiInstance;
     private StarWarsService starWarsService;
 

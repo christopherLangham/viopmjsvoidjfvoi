@@ -1,6 +1,7 @@
 package com.langham.chris.starships;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.langham.chris.starships.adapter.StarShipDetailListener;
 import com.langham.chris.starships.adapter.StarShipListAdapter;
 import com.langham.chris.starships.api.NetworkListener;
 import com.langham.chris.starships.databinding.ActivityMainBinding;
@@ -18,7 +20,7 @@ import com.langham.chris.starships.viewmodel.StarShipListViewModel;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements StarShipDetailListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ActivityMainBinding binding;
@@ -52,18 +54,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Throwable error) {
                 Log.d(TAG, error.getMessage());
-                //load from db??
-                //alert dialog
+                //load from database to see if we can show something to the user
+                //possibly show an alert dialog
             }
         });
     }
 
-    private void setupViewModel() {
-        viewModel = ViewModelProviders.of(this).get(StarShipListViewModel.class);
+    @Override
+    public void onShowDetail(StarShip starShip) {
+        Intent intent = new Intent(this, StarShipActivity.class);
+        intent.putExtra(StarShipActivity.STAR_SHIP_KEY, starShip);
+        startActivity(intent);
     }
 
     private void setupRecyclerAdapter() {
-        adapter = new StarShipListAdapter(Collections.emptyList());
+        adapter = new StarShipListAdapter(this, Collections.emptyList());
         binding.starShipListView.setAdapter(adapter);
         binding.starShipListView.setLayoutManager(new LinearLayoutManager(this));
         binding.starShipListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -93,5 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setupViewModel() {
+        viewModel = ViewModelProviders.of(this).get(StarShipListViewModel.class);
     }
 }
