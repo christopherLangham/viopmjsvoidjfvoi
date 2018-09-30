@@ -69,6 +69,7 @@ public class StarShipActivity extends AppCompatActivity implements PilotInfoList
         adapter = new PilotListAdapter(this, Collections.emptyList());
         binding.pilotListView.setAdapter(adapter);
         binding.pilotListView.setLayoutManager(new LinearLayoutManager(this));
+        binding.pilotListView.setNestedScrollingEnabled(false);
     }
 
 

@@ -10,91 +10,95 @@
             type="com.langham.chris.starships.viewmodel.StarShipViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:textSize="@dimen/star_ship_details_font_size">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:textSize="@dimen/star_ship_details_font_size">
 
-            <TextView
-                android:id="@+id/ship_model"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.model}"
-                android:textSize="@dimen/star_ship_details_font_size"
-                tools:text="Model: " />
+                android:layout_margin="@dimen/default_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ship_model"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.model}"
+                    android:textSize="@dimen/star_ship_details_font_size"
+                    tools:text="Model: " />
+
+                <TextView
+                    android:id="@+id/ship_class"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.shipClass}"
+                    tools:text="Ship: " />
+
+                <TextView
+                    android:id="@+id/ship_manufacturer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.manufacturerFormatted}"
+                    tools:text="Manufacturer: " />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/ship_class"
+                android:id="@+id/ship_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.shipClass}"
-                tools:text="Ship: " />
+                android:layout_marginStart="@dimen/default_margin"
+                android:text="@{viewModel.value}"
+                tools:text="Value: " />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ship_crew_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.crewSize}"
+                    tools:text="Crew: " />
+
+                <TextView
+                    android:id="@+id/ship_passenger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.passengerCapacity}"
+                    tools:text="Passenger: " />
+
+                <TextView
+                    android:id="@+id/cargo_capacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.cargoCapacity}"
+                    tools:text="Cargo: " />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/ship_manufacturer"
+                android:id="@+id/piloted_by_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.manufacturerFormatted}"
-                tools:text="Manufacturer: " />
+                android:layout_marginStart="@dimen/default_margin"
+                android:text="@string/piloted_by_label_text"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/pilotListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/ship_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.value}"
-            android:layout_marginStart="@dimen/default_margin"
-            tools:text="Value: " />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/ship_crew_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.crewSize}"
-                tools:text="Crew: "/>
-
-            <TextView
-                android:id="@+id/ship_passenger"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.passengerCapacity}"
-                tools:text="Passenger: "/>
-
-            <TextView
-                android:id="@+id/cargo_capacity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.cargoCapacity}"
-                tools:text="Cargo: "/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/piloted_by_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_marginStart="@dimen/default_margin"
-            android:text="@string/piloted_by_label_text" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/pilotListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </LinearLayout>
+    </ScrollView>
 </layout>
