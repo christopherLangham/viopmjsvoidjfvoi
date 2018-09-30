@@ -1,26 +1,26 @@
 package com.langham.chris.starships.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import com.langham.chris.starships.api.NetworkListener;
 import com.langham.chris.starships.api.StarWarsApi;
 import com.langham.chris.starships.model.Person;
 import com.langham.chris.starships.model.StarShip;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StarShipViewModel extends ViewModel {
 
     private static final String TAG = StarShipViewModel.class.getSimpleName();
     private StarShip starShip;
-    private List<Person> pilotList = Collections.emptyList();
+    private List<Person> pilotList = new ArrayList<>();
 
     public StarShipViewModel() {
     }
@@ -78,41 +78,30 @@ public class StarShipViewModel extends ViewModel {
         return pilotList;
     }
 
-    public void setPilotList(final List<Person> pilotList) {
-        this.pilotList = pilotList;
-    }
-
-    public void getPilotsInfo(NetworkListener<List<Person>> listener) {
-        List<Integer> personIds = getPilotIds();
-        this.pilotList = new ArrayList<>();
-
-        for (int personId : personIds) {
-            try {
-                retrievePersonInfo(personId);
-            } catch (IOException e) {
-                Log.d(TAG, "Something went wrong getting person " + personId
-                        + "Error: " + e.getMessage());
-            }
-        }
-
-        if (listener == null) {
-            return;
-        }
-
-        if (pilotList.size() > 0) {
-            listener.onSuccess(this.pilotList);
+    public void getPilotsInfo(NetworkListener<Person> listener) {
+        for (int personId : getPilotIds()) {
+            retrievePersonInfo(personId, listener);
         }
     }
 
-    private void retrievePersonInfo(int personId) throws IOException {
+    private void retrievePersonInfo(int personId, NetworkListener<Person> listener) {
         Call<Person> call = StarWarsApi.getApi().getPerson(personId);
-        Response<Person> response = call.execute();
-        if (response.isSuccessful() && response.body() != null) {
-            pilotList.add(response.body());
-        } else {
-            Log.d(TAG, "Something went wrong getting person " + personId
-                    + ". Http code " + response.code());
-        }
+        call.enqueue(new Callback<Person>() {
+            @Override
+            public void onResponse(@NonNull Call<Person> call, @NonNull final Response<Person> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    listener.onSuccess(response.body());
+                } else {
+                    listener.onFailure(new Throwable("Something went wrong getting person " + personId
+                            + ". Http code " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Person> call, @NonNull Throwable error) {
+                listener.onFailure(error);
+            }
+        });
     }
 
     private List<Integer> getPilotIds() {
@@ -122,5 +111,9 @@ public class StarShipViewModel extends ViewModel {
             pilotIds.add(Integer.valueOf(pilotUrl));
         }
         return pilotIds;
+    }
+
+    public void addPilot(final Person person) {
+        this.pilotList.add(person);
     }
 }

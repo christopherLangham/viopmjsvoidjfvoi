@@ -15,7 +15,7 @@ import java.util.List;
 public class StarShipListAdapter extends RecyclerView.Adapter<StarShipViewHolder> {
 
     private List<StarShip> starShips;
-    private StarShipDetailListener starShipDetailListener;
+    private final StarShipDetailListener starShipDetailListener;
 
     public StarShipListAdapter(final StarShipDetailListener listener, final List<StarShip> starShips) {
         this.starShipDetailListener = listener;
