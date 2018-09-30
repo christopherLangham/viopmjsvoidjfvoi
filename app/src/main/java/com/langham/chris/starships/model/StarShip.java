@@ -43,6 +43,8 @@ public class StarShip implements Parcelable {
     @SerializedName("MGLT")
     private String maxMegaLight;
 
+    public StarShip() {
+    }
 
     protected StarShip(Parcel in) {
         name = in.readString();

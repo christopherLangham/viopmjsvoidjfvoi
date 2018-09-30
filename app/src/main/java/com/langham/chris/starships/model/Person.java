@@ -39,6 +39,8 @@ public class Person implements Parcelable {
     @SerializedName("vehicles")
     private List<String> vehiclesUrls;
 
+    public Person() {
+    }
 
     protected Person(Parcel in) {
         name = in.readString();

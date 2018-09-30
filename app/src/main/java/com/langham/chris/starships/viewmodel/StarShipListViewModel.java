@@ -60,7 +60,7 @@ public class StarShipListViewModel extends ViewModel {
                 && currentPage.hasNext();
     }
 
-    private int getNextPageIndex() {
+    int getNextPageIndex() {
         if (currentPage == null) {
             return FIRST_PAGE_INDEX;
         } else {

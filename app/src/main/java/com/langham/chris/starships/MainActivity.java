@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements StarShipDetailLis
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
                 LinearLayoutManager layoutManager = (LinearLayoutManager) binding.starShipListView.getLayoutManager();
                 int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();

@@ -60,6 +60,7 @@ public class StarShipActivity extends AppCompatActivity implements PilotInfoList
         StarShip starShip = getIntent().getParcelableExtra(STAR_SHIP_KEY);
         viewModel = ViewModelProviders.of(this).get(StarShipViewModel.class);
         viewModel.setStarShip(starShip);
+
         setTitle(viewModel.getShipName());
         binding.setViewModel(viewModel);
     }

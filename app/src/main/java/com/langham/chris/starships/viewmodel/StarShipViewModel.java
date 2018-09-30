@@ -9,7 +9,6 @@ import com.langham.chris.starships.model.Person;
 import com.langham.chris.starships.model.StarShip;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -18,7 +17,6 @@ import retrofit2.Response;
 
 public class StarShipViewModel extends ViewModel {
 
-    private static final String TAG = StarShipViewModel.class.getSimpleName();
     private StarShip starShip;
     private List<Person> pilotList = new ArrayList<>();
 
@@ -104,7 +102,7 @@ public class StarShipViewModel extends ViewModel {
         });
     }
 
-    private List<Integer> getPilotIds() {
+    List<Integer> getPilotIds() {
         List<Integer> pilotIds = new ArrayList<>();
         for (String pilotUrl : starShip.getPilotsUrls()) {
             pilotUrl = pilotUrl.replaceAll("\\D+", "");

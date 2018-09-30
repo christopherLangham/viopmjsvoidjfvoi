@@ -10,13 +10,12 @@ public class PilotViewHolder extends RecyclerView.ViewHolder {
 
     private LineItemPilotBinding binding;
 
-    public PilotViewHolder(LineItemPilotBinding binding) {
+    public PilotViewHolder(final LineItemPilotBinding binding) {
         super(binding.getRoot());
         this.binding = binding;
     }
 
-
-    public void setViewModel(Person person) {
+    public void setViewModel(final Person person) {
         binding.setViewModel(new PilotViewModel(person));
     }
 }

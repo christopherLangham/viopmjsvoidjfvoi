@@ -16,6 +16,8 @@ public class StarShipPage implements Parcelable {
     @SerializedName("results")
     private List<StarShip> starShipList;
 
+    public StarShipPage() {
+    }
 
     protected StarShipPage(Parcel in) {
         count = in.readInt();
