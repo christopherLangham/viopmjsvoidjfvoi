@@ -27,20 +27,25 @@
             android:layout_height="wrap_content"
             android:text="@{pilotViewModel.height}"
             android:textSize="@dimen/star_ship_details_font_size"
-            tools:text="Model: " />
+            android:layout_margin="@dimen/default_margin"
+            tools:text="Height: " />
 
         <TextView
             android:id="@+id/weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
             android:text="@{pilotViewModel.weight}"
-            tools:text="Ship: " />
+            tools:text="Weight: " />
 
         <TextView
             android:id="@+id/home_world_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/home_world_label_text"
+            android:textSize="21sp"
+            android:layout_margin="@dimen/default_margin"
             android:textStyle="bold" />
 
         <TextView
@@ -48,6 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{worldViewModel.name}"
+            android:textSize="18sp"
+            android:layout_marginStart="@dimen/default_margin"
             tools:text="Name" />
 
         <TextView
@@ -55,6 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{worldViewModel.climate}"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
             tools:text="Climate: " />
 
         <TextView
@@ -62,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{worldViewModel.population}"
+            android:layout_marginStart="@dimen/default_margin"
             tools:text="Population: " />
 
     </LinearLayout>
