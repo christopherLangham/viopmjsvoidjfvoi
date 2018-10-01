@@ -72,6 +72,10 @@ public class StarShipViewModel extends ViewModel {
         this.starShip = starShip;
     }
 
+    public StarShip getStarShip() {
+        return starShip;
+    }
+
     public List<Person> getPilotList() {
         return pilotList;
     }

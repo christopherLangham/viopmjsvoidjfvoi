@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="pilotViewModel"
+            type="com.langham.chris.starships.viewmodel.PilotViewModel" />
+
+        <variable
+            name="worldViewModel"
+            type="com.langham.chris.starships.viewmodel.PlanetViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:textSize="@dimen/star_ship_details_font_size">
+
+
+        <TextView
+            android:id="@+id/height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{pilotViewModel.height}"
+            android:textSize="@dimen/star_ship_details_font_size"
+            tools:text="Model: " />
+
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{pilotViewModel.weight}"
+            tools:text="Ship: " />
+
+        <TextView
+            android:id="@+id/home_world_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/home_world_label_text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/home_world_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{worldViewModel.name}"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/home_world_climate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{worldViewModel.climate}"
+            tools:text="Climate: " />
+
+        <TextView
+            android:id="@+id/home_world_population"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{worldViewModel.population}"
+            tools:text="Population: " />
+
+    </LinearLayout>
+</layout>

@@ -1,6 +1,7 @@
 package com.langham.chris.starships.api;
 
 import com.langham.chris.starships.model.Person;
+import com.langham.chris.starships.model.Planet;
 import com.langham.chris.starships.model.StarShipPage;
 
 import retrofit2.Call;
@@ -15,4 +16,7 @@ public interface StarWarsService {
 
     @GET("/api/starships/")
     Call<StarShipPage> getStarShips(@Query("page") int page);
+
+    @GET("/api/planets/{id}/")
+    Call<Planet> getPlanet(@Path("id") int planet);
 }

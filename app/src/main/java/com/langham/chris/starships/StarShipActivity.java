@@ -1,6 +1,7 @@
 package com.langham.chris.starships;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import com.langham.chris.starships.model.StarShip;
 import com.langham.chris.starships.viewmodel.StarShipViewModel;
 
 import java.util.Collections;
+
+import static com.langham.chris.starships.PersonActivity.PILOT_KEY;
 
 public class StarShipActivity extends AppCompatActivity implements PilotInfoListener {
 
@@ -37,6 +40,7 @@ public class StarShipActivity extends AppCompatActivity implements PilotInfoList
     @Override
     protected void onResume() {
         super.onResume();
+
         if (viewModel.getPilotList().size() > 0) {
             adapter.setPilotList(viewModel.getPilotList());
             return;
@@ -75,6 +79,9 @@ public class StarShipActivity extends AppCompatActivity implements PilotInfoList
 
     @Override
     public void onShowPerson(Person person) {
-        Log.d(TAG, person.getName());
+        Intent intent = new Intent(this, PersonActivity.class);
+        intent.putExtra(PILOT_KEY, person);
+        intent.putExtra(STAR_SHIP_KEY, viewModel.getStarShip());
+        startActivity(intent);
     }
 }
